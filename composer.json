@@ -2,7 +2,7 @@
     "name": "gabrielkaputa/bitly",
     "description": "PHP library to consume bit.ly API",
     "keywords": ["gabriel", "kaputa", "bitly", "php", "api"],
-    "version": "0.1.0",
+    "type": "library",
     "authors": [
         {
             "name": "Gabriel Kaputa",
