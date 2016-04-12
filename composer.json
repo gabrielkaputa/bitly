@@ -1,0 +1,23 @@
+{
+    "name": "gabrielkaputa/bitly",
+    "description": "PHP library to consume bit.ly API",
+    "keywords": ["gabriel", "kaputa", "bitly", "php", "api"],
+    "version": "0.1.0",
+    "authors": [
+        {
+            "name": "Gabriel Kaputa",
+            "email": "gabriel.kaputa@gmail.com"
+        }
+    ],
+    "require": {
+        "nategood/httpful": "^0.2.20"
+    },
+    "autoload": {
+        "psr-4": {
+            "GabrielKaputa\\Bitly\\": "src"
+        }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.3"
+    }
+}
