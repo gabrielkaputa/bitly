@@ -22,10 +22,10 @@ all you need is to [get your generic access token](https://bitly.com/a/oauth_app
 When done, you can create shortlinks like this:
 
 ```php
-    require_once("vendor/autoload.php");
-    
-    $bitly = \GabrielKaputa\Bitly::withGenericAccessToken(GENERIC_ACCESS_TOKEN);
-    $short_url = $bitly->shortenUrl($long_url);
+require_once("vendor/autoload.php");
+
+$bitly = \GabrielKaputa\Bitly::withGenericAccessToken(GENERIC_ACCESS_TOKEN);
+$short_url = $bitly->shortenUrl($long_url);
 ```
 
 Another option is when you are working with multiple end-users or to pull any information on a user level
@@ -33,8 +33,8 @@ for your own account. In this case you will need to [register your application](
 to get your `CLIENT_ID` and `CLIENT_SECRET`. When done, you can create shortlinks like this:
 
 ```php
-    require_once("vendor/autoload.php");
-    
-    $bitly = \GabrielKaputa\Bitly::withCredentials(CLIENT_ID, CLIENT_SECRET, USERNAME, PASSWORD);
-    $short_url = $bitly->shortenUrl($long_url);
+require_once("vendor/autoload.php");
+
+$bitly = \GabrielKaputa\Bitly::withCredentials(CLIENT_ID, CLIENT_SECRET, USERNAME, PASSWORD);
+$short_url = $bitly->shortenUrl($long_url);
 ```
