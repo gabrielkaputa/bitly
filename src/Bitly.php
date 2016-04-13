@@ -12,15 +12,18 @@ class Bitly
     private $username;
     private $password;
     private $auth_header;
+    private $access_token;
 
     const API_HOST = "https://api-ssl.bitly.com";
 
     private function sendRequest($endpoint, $method = Http::GET, $payload = null)
     {
         $template = Request::init()
-            ->addHeader('Authorization', 'Basic ' . $this->auth_header)
             ->method($method)
             ->sendsType(Mime::JSON);
+        if (isset($this->auth_header)) {
+            $template->addHeader('Authorization', 'Basic ' . $this->auth_header);
+        }
         Request::ini($template);
         $r = null;
         switch ($method) {
@@ -41,22 +44,33 @@ class Bitly
         return $r;
     }
 
-    public function __construct($client_id, $client_secret, $username, $password)
+    public static function withCredentials($client_id, $client_secret, $username, $password)
     {
-        $this->client_id = $client_id;
-        $this->client_secret = $client_secret;
-        $this->username = $username;
-        $this->password = $password;
-        $this->auth_header = base64_encode($this->username . ":" . $this->password);
+        $bitly = new Bitly();
+        $bitly->client_id = $client_id;
+        $bitly->client_secret = $client_secret;
+        $bitly->username = $username;
+        $bitly->password = $password;
+        $bitly->auth_header = base64_encode($bitly->username . ":" . $bitly->password);
+        return $bitly;
+    }
+
+    public static function withGenericAccessToken($access_token)
+    {
+        $bitly = new Bitly();
+        $bitly->access_token = $access_token;
+        return $bitly;
     }
 
     public function getAccessToken()
     {
+        if (isset($this->access_token)) return $this->access_token;
         $params = [
             'client_id' => $this->client_id,
             'client_secret' => $this->client_secret
         ];
-        return $this->sendRequest("/oauth/access_token", Http::POST, $params)->body;
+        $this->access_token = $this->sendRequest("/oauth/access_token", Http::POST, $params)->body;
+        return $this->access_token;
     }
 
     public function shortenUrl($url)

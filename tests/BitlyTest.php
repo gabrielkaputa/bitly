@@ -5,9 +5,15 @@ use GabrielKaputa\Bitly\Bitly;
 
 class BitlyTest extends \PHPUnit_Framework_TestCase
 {
-    public function testConstruct()
+    public function testConstructWithAccessToken()
     {
-        $bitly = new Bitly(CLIENT_ID, CLIENT_SECRET, USERNAME, PASSWORD);
+        $bitly = Bitly::withGenericAccessToken(GENERIC_ACCESS_TOKEN);
+        $this->assertAttributeEquals(GENERIC_ACCESS_TOKEN, 'access_token', $bitly);
+    }
+
+    public function testConstructWithCredentials()
+    {
+        $bitly = Bitly::withCredentials(CLIENT_ID, CLIENT_SECRET, USERNAME, PASSWORD);
         $this->assertAttributeEquals(CLIENT_ID, 'client_id', $bitly);
         $this->assertAttributeEquals(CLIENT_SECRET, 'client_secret', $bitly);
         $this->assertAttributeEquals(USERNAME, 'username', $bitly);
@@ -15,15 +21,28 @@ class BitlyTest extends \PHPUnit_Framework_TestCase
         $this->assertAttributeEquals(base64_encode(USERNAME . ":" . PASSWORD), 'auth_header', $bitly);
     }
 
-    public function testGetAccessToken()
+    public function testGetAccessTokenWithAccessToken()
     {
-        $bitly = new Bitly(CLIENT_ID, CLIENT_SECRET, USERNAME, PASSWORD);
+        $bitly = Bitly::withGenericAccessToken(GENERIC_ACCESS_TOKEN);
+        $this->assertEquals(GENERIC_ACCESS_TOKEN, $bitly->getAccessToken());
+    }
+
+    public function testGetAccessTokenWithCredentials()
+    {
+        $bitly = Bitly::withCredentials(CLIENT_ID, CLIENT_SECRET, USERNAME, PASSWORD);
         $this->assertNotFalse($bitly->getAccessToken());
     }
 
-    public function testShortenUrl()
+    public function testShortenUrlWithAccessToken()
     {
-        $bitly = new Bitly(CLIENT_ID, CLIENT_SECRET, USERNAME, PASSWORD);
+        $bitly = Bitly::withGenericAccessToken(GENERIC_ACCESS_TOKEN);
+        $short_url = $bitly->shortenUrl("https://www.google.com");
+        $this->assertNotFalse($short_url);
+    }
+
+    public function testShortenUrlWithCredentials()
+    {
+        $bitly = Bitly::withCredentials(CLIENT_ID, CLIENT_SECRET, USERNAME, PASSWORD);
         $short_url = $bitly->shortenUrl("https://www.google.com");
         $this->assertNotFalse($short_url);
     }
@@ -31,7 +50,7 @@ class BitlyTest extends \PHPUnit_Framework_TestCase
     public function testInvalidCredentials()
     {
         $this->expectException(\Exception::class);
-        $bitly = new Bitly(1, 1, 1, 1);
+        $bitly = Bitly::withCredentials(1, 1, 1, 1);
         $bitly->getAccessToken();
     }
 }
