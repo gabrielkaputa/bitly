@@ -6,9 +6,14 @@
     "authors": [
         {
             "name": "Gabriel Kaputa",
-            "email": "gabriel.kaputa@gmail.com"
+            "email": "gabriel.kaputa@gmail.com",
+            "role": "Developer"
         }
     ],
+    "license": "GPL-3.0",
+    "support": {
+        "email": "gabriel.kaputa@gmail.com"
+    },
     "require": {
         "nategood/httpful": "^0.2.20"
     },
