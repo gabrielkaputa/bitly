@@ -10,7 +10,7 @@ PHP library to consume bit.ly API
 The recommended way to install this library is through [Composer](http://getcomposer.org/doc/00-intro.md).
 
 ```shell
-composer install gabrielkaputa/bitly
+composer require gabrielkaputa/bitly
 ```
 
 ## Usage
